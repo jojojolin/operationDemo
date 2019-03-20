@@ -1,0 +1,44 @@
+ Program
+   BeforeStart
+     freeze_move≔ False 
+     var_1≔socket_open("10.223.123.105",30000)
+     targetPos≔[0,0,0,0,0,0]
+     prevPos≔[0,0,0,0,0,0]
+     delay≔0
+     counter≔0
+     flag≔0
+     grip≔0
+     MoveJ
+       base_pos
+   Robot Program
+     Loop var_1≟ False 
+       var_1≔socket_open("10.223.123.105",30000)
+     socket_send_string("sensor_val")
+     var_2≔socket_read_ascii_float(8)
+     If var_2[0]≟8
+       If var_2[7]≟1
+         grip≔0
+       Else
+         grip≔1
+       delay≔var_2[8]
+       Loop counter<6
+         targetPos[counter] = var_2[counter+1]
+         counter≔counter+1
+       flag≔0
+     var_1≔ False 
+     socket_close()
+     counter≔0
+     flag≔1
+   Thread_2
+     If grip≟1
+       Gripper Close (1)
+     Else
+       Gripper Open (1)
+   Thread_1
+     If flag≟1
+       If targetPos≠prevPos  and  targetPos≠[0,0,0,0,0,0]
+         movej(targetPos,a=1.4,v=1.5,t=delay,r=0)
+         prevPos=targetPos
+     Else
+       stopj(15)
+     Wait: 0.001
