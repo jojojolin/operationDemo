@@ -4,7 +4,7 @@ This repository contains a detail guide to set up the UR3, Gripper and Leap Moti
 
 
 ## Purpose of this game
-Since our client wants to showcase the significance of reduced latency of 5G network, we thought doing a game might be a fun way to go. By comparing games played over 4G and 5G, users can easily feel how responsive the robot has become as the latency's reduced. The game also serves as an example how a potential use case of the future 5G could be. 
+Since our client wants to showcase the significance of reduced latency of 5G network, we thought doing a game might be a fun way to go. By comparing games played over 4G and 5G, users can easily feel how responsive the robot has become as the latency's reduced. The game also serves as an example of how a potential use case of the future 5G could be. 
 
 
 ## How to play?
