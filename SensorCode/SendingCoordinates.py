@@ -10,7 +10,7 @@ import json
 #from ast import literal_eval
 
 
-HOST = "192.168.88.13" # IP of this laptop
+HOST = "192.168.8.105" # IP of this laptop
 PORT = 30000 # port for this server 
 count = 0
 

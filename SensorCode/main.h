@@ -17,17 +17,15 @@
 
 /*UR3 Variables*/
 #define PORT 30000
-#define WAIST_MAX 30
+#define WAIST_MAX 20.41//30
 #define WAIST_MIN -20
-#define SHOULDER_MAX -80
-#define SHOULDER_MAX_HIGH -67
-#define SHOULDER_MIN -130//-135
+#define SHOULDER_MAX -60.5//-60.5 //-80
+#define SHOULDER_MIN -143//-130//-135
 #define ELBOW_MAX -30 //-40
-#define ELBOW_MIN -97 //-105
-#define ELBOW_LOWER_MIN -134
+#define ELBOW_MIN -104//-97//-105
 #define WRIST2_BASE_POS 85
 #define WRIST1_UP -65
-#define WRIST1_DOWN -100 //-115
+#define WRIST1_DOWN -103//-115
 #define WRIST2_LEFT 120
 #define WRIST2_RIGHT 60
 #define WRIST3_RIGHT 310
@@ -39,8 +37,8 @@
 #define LM_MIN_X -140
 #define LM_MAX_Y 400
 #define LM_MIN_Y 250
-#define LM_MAX_Z 170
-#define LM_MIN_Z 10
+#define LM_MAX_Z 150//170
+#define LM_MIN_Z 0//10
 #define LM_PITCH_UP 50 //was 50
 #define LM_PITCH_DOWN -80 // was -50
 #define LM_YAW_LEFT -48
@@ -66,9 +64,15 @@
 #define UR3_MIN_Z 10.0
 #define DELAY_4G 1.0
 #define DELAY_5G 0.7
+#define MOVE_THRESHOLD_HB 400
+#define SIGN_4G 1
+#define SIGN_5G 2
+
 int64_t lastFrameID = 0; //The last frame received
 boolean is_extended = true;
 static float delay = 0;
+int prev_sign = 0;
+int sign_check = 0;
 
 /*This is to interpret the coordinate movement of the UR3*/
 typedef struct{
@@ -79,7 +83,6 @@ typedef struct{
 	float wrist2; // Wrist2 This is for yaw movement of wrist i.e. wrist moving sideways
 	float wrist3; // Wrist3 is for rolling of the wrist.
 	bool grip; //Grip True implies to close the gripper, False is to open
-	//void init();
 }UR3data;
 
 
@@ -90,7 +93,7 @@ static int handCheck = 0; //This is to check nuber of frames without a hand
 static float prevx= 0;
 static float prevy = 0;
 static float prevz = 0;
-static UR3data ur3 = {2.26, -87.6, -91.5, -90.38, 93.25, 181.86, 1};//{3.80, -95, -82, -90, 85, 270, 1 } base, shoulder, elbow, wrist1, wrist2, wrist3
+static UR3data* ur3 = (UR3data*)malloc(sizeof(UR3data)); //prevent garbage values
 float prev_shoulder = -87.6;
 float prev_elbow = -91.5;
 LEAP_VECTOR* prev_index = (LEAP_VECTOR*)malloc(sizeof(LEAP_VECTOR));
@@ -98,10 +101,11 @@ LEAP_VECTOR* prev_palm = (LEAP_VECTOR*)malloc(sizeof(LEAP_VECTOR));
 boolean index_set = false;
 
 
+
 int32_t handID = -1;
 
 boolean chkGrip(LEAP_HAND* hand);
-void setUR3Values(LEAP_HAND* hand);//, UR3data* ur3
+void setUR3Values(LEAP_HAND* hand);
 int getWaist(float HandX);
 int getShoulder(float HandY);
 int getElbow(LEAP_HAND* hand);
@@ -112,7 +116,6 @@ float degToRad(int val);
 float distanceMove(LEAP_HAND* hand);
 float dist(LEAP_VECTOR a, LEAP_VECTOR b);
 float setWrist3(LEAP_HAND* hand);
-void moveZ(float dist, float* shoulder, float* elbow);
 void drop();
 
 #endif
