@@ -3,23 +3,6 @@
 This repository contains a detail guide to set up the UR3, Gripper and Leap Motion sensor for operation board game. It also contains the source code.
 
 
-## Purpose of this game
-Since our client wants to showcase the significance of reduced latency of 5G network, we thought doing a game might be a fun way to go. By comparing game played over 4G to 5G, users can easily feel the increased synchronisation of the robot as the latency's reduced. This game is an example of a potential use case of the future 5G. 
-
-
-## How to play?
-
-1. Hover your hand above the LeapMotion sensor, if you can see the coloured skeleton of your hand from the LeapMotion Visualiser, your hand is now tracked by the sensor. 
-
-2. Do a peace sign to activate the robot. Now you can move your hand up, down, left, right to control the robot to pick up bones.
-
-3. Here's some special gestures you can do : 
-	1. Clench your fist to close the gripper
-	2. Do a rock-and-roll sign to drop the bone to the basket
-
-4. You need to grab as many bones you can from the board to win the game.
-
-
 
 ## Software Overview
 
